@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Copart.fi aukciono mokesčių skaičiuoklė</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
   <style>
     :root {
       --bg: #f4f7fb;
@@ -30,7 +31,6 @@
     }
 
     .wrap { width: min(980px, 100%); margin: 0 auto; }
-
     header { text-align: center; padding: 22px 10px 16px; }
 
     .brand-top {
@@ -93,56 +93,7 @@
       margin: 14px 0 7px;
     }
 
-    .info {
-      position: relative;
-      display: none !important; /*inline-flex*/;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #eef2ff;
-      color: var(--primary-dark);
-      font-size: .75rem;
-      font-weight: 900;
-      cursor: help;
-      border: 1px solid #c7d2fe;
-      flex: 0 0 auto;
-    }
-
-    .info:hover::after,
-    .info:focus::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      left: 50%;
-      bottom: 135%;
-      transform: translateX(-50%);
-      width: max-content;
-      max-width: 260px;
-      background: #111827;
-      color: white;
-      padding: 9px 11px;
-      border-radius: 10px;
-      font-size: .82rem;
-      line-height: 1.35;
-      font-weight: 600;
-      white-space: normal;
-      z-index: 40;
-      box-shadow: 0 12px 28px rgba(15,23,42,.24);
-      text-align: left;
-    }
-
-    .info:hover::before,
-    .info:focus::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: 112%;
-      transform: translateX(-50%);
-      border: 6px solid transparent;
-      border-top-color: #111827;
-      z-index: 41;
-    }
+    .info { display: none !important; }
 
     .input-row { position: relative; }
 
@@ -170,7 +121,6 @@
     }
 
     .hint { color: var(--muted); font-size: .9rem; margin-top: 8px; line-height: 1.4; }
-
     .buttons { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
 
     button {
@@ -206,14 +156,7 @@
     }
 
     .line:last-child { border-bottom: 0; }
-
-    .line span:first-child {
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
+    .line span:first-child { color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
     .line strong { font-size: 1.08rem; white-space: nowrap; text-align: right; }
 
     .total {
@@ -244,22 +187,12 @@
       padding-top: 12px;
     }
 
-    details {
-      margin-top: 18px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
-    }
-
+    details { margin-top: 18px; background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; }
     summary { cursor: pointer; font-weight: 800; }
-
     table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .92rem; }
-
     th, td { border-bottom: 1px solid var(--border); padding: 9px 6px; text-align: right; }
     th:first-child, td:first-child { text-align: left; }
     th { color: var(--muted); font-weight: 800; }
-
     footer { color: var(--muted); text-align: center; padding: 18px 8px 8px; font-size: .88rem; line-height: 1.45; }
 
     @media (max-width: 760px) {
@@ -273,7 +206,6 @@
       .line strong { font-size: 1rem; }
       table { font-size: .82rem; }
       th, td { padding: 8px 4px; }
-      .info:hover::after, .info:focus::after { max-width: 220px; }
     }
 
     @media print {
@@ -281,20 +213,8 @@
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       body { background: #fff !important; padding: 0; color: #111827; }
       .wrap { width: 100%; max-width: none; }
-      header {
-        padding: 0 0 10mm;
-        text-align: center;
-        border-bottom: 2px solid #d9e2ef;
-        margin-bottom: 8mm;
-      }
-      header p, h1  {
-        display: none;
-      }
-      
-      .brand-top { display: none !important; justify-content: center; margin-bottom: 7mm; }
-      .brand-logo { width: 150px; margin: 0 auto; }
-      header h1 { font-size: 22pt; letter-spacing: -0.02em; margin-bottom: 4mm; }
-      header p { max-width: none; font-size: 10pt; color: #475569; }
+      header { padding: 0; margin: 0; border: 0; }
+      header p, header h1, .brand-top { display: none !important; }
       .grid { display: block; }
       .card {
         box-shadow: none;
@@ -309,16 +229,8 @@
       .card:first-child { display: none; }
       .card h2 { font-size: 14pt; }
       .line { padding: 8px 0; }
-      .line span:first-child,
-      .line strong { font-size: 10pt; }
-      .info { display: none !important; }
-      .total {
-        background: #ecfdf5 !important;
-        border: 1px solid #a7f3d0;
-        padding: 14px;
-        margin-top: 8mm;
-        break-inside: avoid;
-      }
+      .line span:first-child, .line strong { font-size: 10pt; }
+      .total { background: #ecfdf5 !important; border: 1px solid #a7f3d0; padding: 14px; margin-top: 8mm; break-inside: avoid; }
       .total .label { font-size: 10pt; }
       .total .amount { font-size: 22pt; white-space: nowrap; }
       .print-note { display: block; }
@@ -332,39 +244,26 @@
       <div class="brand-top">
         <img class="brand-logo" src="logo.svg" alt="Copart.fi logotipas" />
       </div>
-
       <h1>Aukciono mokesčių skaičiuoklė</h1>
-      <p>Ši skaičiuoklė skirta savarankiškai įsivertinti preliminarias transporto priemonės pirkimo iš aukciono išlaidas.
-        
-        Įveskite transporto priemonės aukciono kainą ir, jei aktualu, transportavimo kainą. Skaičiuoklė automatiškai apskaičiuos pagrindinius aukciono mokesčius, transportavimo išlaidas ir pateiks preliminarią galutinę įsigijimo sumą.
-        
-        Skaičiavimai yra orientaciniai, parengti pagal įvestus duomenis ir skirti tik asmeniniam įsivertinimui. Jie nėra oficialus pasiūlymas, sąmata ar galutinė transporto priemonės pirkimo kaina.</p>
+      <p>Ši skaičiuoklė skirta savarankiškai įsivertinti preliminarias transporto priemonės pirkimo iš aukciono išlaidas. Įveskite transporto priemonės aukciono kainą ir, jei aktualu, transportavimo kainą. Skaičiuoklė automatiškai apskaičiuos pagrindinius aukciono mokesčius, transportavimo išlaidas ir pateiks preliminarią galutinę įsigijimo sumą. Skaičiavimai yra orientaciniai, parengti pagal įvestus duomenis ir skirti tik asmeniniam įsivertinimui.</p>
     </header>
 
     <main class="grid">
       <section class="card">
-         <h2> </h2>
-
-        <label for="salePrice">
-          Transporto priemonės aukciono kaina
-          <span class="info" tabindex="0" data-tooltip="Winning bid">?</span>
-        </label>
+        <h2></h2>
+        <label for="salePrice">Transporto priemonės aukciono kaina</label>
         <div class="input-row">
           <input id="salePrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="" />
           <span class="euro">€</span>
         </div>
         <div class="hint">Aukciono ir virtualaus statymo mokesčiai skaičiuojami pagal transporto priemonės aukciono kainos intervalą.</div>
 
-        <label for="transportPrice">
-          Transportavimo kaina
-          <span class="info" tabindex="0" data-tooltip="Delivery cost">?</span>
-        </label>
+        <label for="transportPrice">Transportavimo kaina</label>
         <div class="input-row">
           <input id="transportPrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="" />
           <span class="euro">€</span>
         </div>
         <div class="hint">Transportavimo suma pridedama prie preliminarios galutinės sumos.</div>
-
         <div class="buttons">
           <button onclick="calculate()">Skaičiuoti</button>
           <button class="secondary" onclick="resetCalc()">Išvalyti</button>
@@ -375,48 +274,43 @@
       <section class="card">
         <h2>Skaičiavimo rezultatai</h2>
         <div class="result-list">
-          <div class="line"><span>Transporto priemonės aukciono kaina: <span class="info" tabindex="0" data-tooltip="Winning bid">?</span></span><strong id="rSale">0,00 €</strong></div>
-          <div class="line"><span>Dokumentų mokestis: <span class="info" tabindex="0" data-tooltip="Green papers fee">?</span></span><strong id="rGreen">0,00 €</strong></div>
-          <div class="line"><span>Aukciono mokestis: <span class="info" tabindex="0" data-tooltip="Buyer fee">?</span></span><strong id="rBuyer">0,00 €</strong></div>
-          <div class="line"><span>Atsiėmimo mokestis:<span class="info" tabindex="0" data-tooltip="Lot retrieval fee">?</span></span><strong id="rRetrieval">0,00 €</strong></div>
-          <div class="line"><span>Virtualaus statymo mokestis: <span class="info" tabindex="0" data-tooltip="Virtual bid fee">?</span></span><strong id="rVirtual">0,00 €</strong></div>
-          <div class="line"><span>Transportavimo suma: <span class="info" tabindex="0" data-tooltip="Delivery cost">?</span></span><strong id="rTransport">0,00 €</strong></div>
+          <div class="line"><span>Transporto priemonės aukciono kaina:</span><strong id="rSale">0,00 €</strong></div>
+          <div class="line"><span>Dokumentų mokestis:</span><strong id="rGreen">0,00 €</strong></div>
+          <div class="line"><span>Aukciono mokestis:</span><strong id="rBuyer">0,00 €</strong></div>
+          <div class="line"><span>Atsiėmimo mokestis:</span><strong id="rRetrieval">0,00 €</strong></div>
+          <div class="line"><span>Virtualaus statymo mokestis:</span><strong id="rVirtual">0,00 €</strong></div>
+          <div class="line"><span>Transportavimo suma:</span><strong id="rTransport">0,00 €</strong></div>
           <div class="line"><span>Iš viso mokesčių:</span><strong id="rFees">0,00 €</strong></div>
         </div>
-
         <div class="total">
           <div class="label">Preliminari galutinė suma</div>
           <div class="amount" id="rTotal">0,00 €</div>
         </div>
-
-        <div class="print-note">
-          Ši ataskaita yra preliminari ir parengta pagal įvestus duomenis. Galutinė transporto priemonės įsigijimo kaina gali skirtis dėl papildomų aukciono sąlygų, transportavimo ar kitų paslaugų.
-        </div>
+        <div class="print-note">Ši ataskaita yra preliminari ir parengta pagal įvestus duomenis. Galutinė transporto priemonės įsigijimo kaina gali skirtis dėl papildomų aukciono sąlygų, transportavimo ar kitų paslaugų.</div>
       </section>
     </main>
 
     <details>
       <summary>Mokesčių lentelės</summary>
-      <h3>Aukciono mokestis <span class="info" tabindex="0" data-tooltip="Buyer fee">?</span></h3>
+      <h3>Aukciono mokestis</h3>
       <table>
         <thead><tr><th>Nuo</th><th>Iki</th><th>Mokestis</th></tr></thead>
         <tbody id="buyerTable"></tbody>
       </table>
-      <h3>Virtualaus statymo mokestis <span class="info" tabindex="0" data-tooltip="Virtual bid fee">?</span></h3>
+      <h3>Virtualaus statymo mokestis</h3>
       <table>
         <thead><tr><th>Nuo</th><th>Iki</th><th>Mokestis</th></tr></thead>
         <tbody id="virtualTable"></tbody>
       </table>
     </details>
 
-    <footer>
-      Pastaba: Aukciono mokestis nuo 28 000 € skaičiuojamas kaip 6 % nuo transporto priemonės aukciono kainos.
-    </footer>
+    <footer>Pastaba: Aukciono mokestis nuo 28 000 € skaičiuojamas kaip 6 % nuo transporto priemonės aukciono kainos.</footer>
   </div>
 
   <script>
     const greenPapersFee = 71;
     const lotRetrievalFee = 30;
+
     const buyerFees = [
       { from: 0.01, to: 49.99, fee: 5 },
       { from: 50, to: 79.99, fee: 15 },
@@ -467,24 +361,24 @@
     }
 
     function calculate() {
-  const salePrice = numberValue('salePrice');
-  const transportPrice = numberValue('transportPrice');
-  const greenFee = salePrice > 0 ? greenPapersFee : 0;
-  const retrievalFee = salePrice > 0 ? lotRetrievalFee : 0;
-  const buyerFee = getBuyerFee(salePrice);
-  const virtualFee = getVirtualBidFee(salePrice);
-  const feesTotal = greenFee + buyerFee + virtualFee + retrievalFee;
-  const total = salePrice + transportPrice + feesTotal;
+      const salePrice = numberValue('salePrice');
+      const transportPrice = numberValue('transportPrice');
+      const greenFee = salePrice > 0 ? greenPapersFee : 0;
+      const retrievalFee = salePrice > 0 ? lotRetrievalFee : 0;
+      const buyerFee = getBuyerFee(salePrice);
+      const virtualFee = getVirtualBidFee(salePrice);
+      const feesTotal = greenFee + retrievalFee + buyerFee + virtualFee;
+      const total = salePrice + transportPrice + feesTotal;
 
-  document.getElementById('rSale').textContent = eur.format(salePrice);
-  document.getElementById('rGreen').textContent = eur.format(greenFee);
-  document.getElementById('rBuyer').textContent = eur.format(buyerFee);
-  document.getElementById('rVirtual').textContent = eur.format(virtualFee);
-  document.getElementById('rRetrieval').textContent = eur.format(retrievalFee);
-  document.getElementById('rTransport').textContent = eur.format(transportPrice);
-  document.getElementById('rFees').textContent = eur.format(feesTotal);
-  document.getElementById('rTotal').textContent = eur.format(total);
-}
+      document.getElementById('rSale').textContent = eur.format(salePrice);
+      document.getElementById('rGreen').textContent = eur.format(greenFee);
+      document.getElementById('rRetrieval').textContent = eur.format(retrievalFee);
+      document.getElementById('rBuyer').textContent = eur.format(buyerFee);
+      document.getElementById('rVirtual').textContent = eur.format(virtualFee);
+      document.getElementById('rTransport').textContent = eur.format(transportPrice);
+      document.getElementById('rFees').textContent = eur.format(feesTotal);
+      document.getElementById('rTotal').textContent = eur.format(total);
+    }
 
     function resetCalc() {
       document.getElementById('salePrice').value = '';
