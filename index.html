@@ -378,6 +378,7 @@
           <div class="line"><span>Transporto priemonės aukciono kaina: <span class="info" tabindex="0" data-tooltip="Winning bid">?</span></span><strong id="rSale">0,00 €</strong></div>
           <div class="line"><span>Dokumentų mokestis: <span class="info" tabindex="0" data-tooltip="Green papers fee">?</span></span><strong id="rGreen">0,00 €</strong></div>
           <div class="line"><span>Aukciono mokestis: <span class="info" tabindex="0" data-tooltip="Buyer fee">?</span></span><strong id="rBuyer">0,00 €</strong></div>
+          <div class="line"><span>Atsiėmimo mokestis:<span class="info" tabindex="0" data-tooltip="Lot retrieval fee">?</span></span><strong id="rRetrieval">0,00 €</strong></div>
           <div class="line"><span>Virtualaus statymo mokestis: <span class="info" tabindex="0" data-tooltip="Virtual bid fee">?</span></span><strong id="rVirtual">0,00 €</strong></div>
           <div class="line"><span>Transportavimo suma: <span class="info" tabindex="0" data-tooltip="Delivery cost">?</span></span><strong id="rTransport">0,00 €</strong></div>
           <div class="line"><span>Iš viso mokesčių:</span><strong id="rFees">0,00 €</strong></div>
@@ -415,6 +416,7 @@
 
   <script>
     const greenPapersFee = 71;
+    const lotRetrievalFee = 30;
     const buyerFees = [
       { from: 0.01, to: 49.99, fee: 5 },
       { from: 50, to: 79.99, fee: 15 },
@@ -465,18 +467,18 @@
     }
 
     function calculate() {
-      const salePrice = numberValue('salePrice');
-      const transportPrice = numberValue('transportPrice');
       const greenFee = salePrice > 0 ? greenPapersFee : 0;
+      const retrievalFee = salePrice > 0 ? lotRetrievalFee : 0;
       const buyerFee = getBuyerFee(salePrice);
       const virtualFee = getVirtualBidFee(salePrice);
-      const feesTotal = greenFee + buyerFee + virtualFee;
+      const feesTotal = greenFee + buyerFee + virtualFee + retrievalFee;
       const total = salePrice + transportPrice + feesTotal;
 
       document.getElementById('rSale').textContent = eur.format(salePrice);
       document.getElementById('rGreen').textContent = eur.format(greenFee);
       document.getElementById('rBuyer').textContent = eur.format(buyerFee);
       document.getElementById('rVirtual').textContent = eur.format(virtualFee);
+      document.getElementById('rRetrieval').textContent = eur.format(retrievalFee);
       document.getElementById('rTransport').textContent = eur.format(transportPrice);
       document.getElementById('rFees').textContent = eur.format(feesTotal);
       document.getElementById('rTotal').textContent = eur.format(total);
