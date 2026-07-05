@@ -467,22 +467,24 @@
     }
 
     function calculate() {
-      const greenFee = salePrice > 0 ? greenPapersFee : 0;
-      const retrievalFee = salePrice > 0 ? lotRetrievalFee : 0;
-      const buyerFee = getBuyerFee(salePrice);
-      const virtualFee = getVirtualBidFee(salePrice);
-      const feesTotal = greenFee + buyerFee + virtualFee + retrievalFee;
-      const total = salePrice + transportPrice + feesTotal;
+  const salePrice = numberValue('salePrice');
+  const transportPrice = numberValue('transportPrice');
+  const greenFee = salePrice > 0 ? greenPapersFee : 0;
+  const retrievalFee = salePrice > 0 ? lotRetrievalFee : 0;
+  const buyerFee = getBuyerFee(salePrice);
+  const virtualFee = getVirtualBidFee(salePrice);
+  const feesTotal = greenFee + buyerFee + virtualFee + retrievalFee;
+  const total = salePrice + transportPrice + feesTotal;
 
-      document.getElementById('rSale').textContent = eur.format(salePrice);
-      document.getElementById('rGreen').textContent = eur.format(greenFee);
-      document.getElementById('rBuyer').textContent = eur.format(buyerFee);
-      document.getElementById('rVirtual').textContent = eur.format(virtualFee);
-      document.getElementById('rRetrieval').textContent = eur.format(retrievalFee);
-      document.getElementById('rTransport').textContent = eur.format(transportPrice);
-      document.getElementById('rFees').textContent = eur.format(feesTotal);
-      document.getElementById('rTotal').textContent = eur.format(total);
-    }
+  document.getElementById('rSale').textContent = eur.format(salePrice);
+  document.getElementById('rGreen').textContent = eur.format(greenFee);
+  document.getElementById('rBuyer').textContent = eur.format(buyerFee);
+  document.getElementById('rVirtual').textContent = eur.format(virtualFee);
+  document.getElementById('rRetrieval').textContent = eur.format(retrievalFee);
+  document.getElementById('rTransport').textContent = eur.format(transportPrice);
+  document.getElementById('rFees').textContent = eur.format(feesTotal);
+  document.getElementById('rTotal').textContent = eur.format(total);
+}
 
     function resetCalc() {
       document.getElementById('salePrice').value = '';
