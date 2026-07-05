@@ -29,14 +29,27 @@
       padding: 18px;
     }
 
-    .wrap {
-      width: min(980px, 100%);
-      margin: 0 auto;
+    .wrap { width: min(980px, 100%); margin: 0 auto; }
+
+    header { text-align: center; padding: 22px 10px 16px; }
+
+    .brand-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
     }
 
-    header {
-      text-align: center;
-      padding: 22px 10px 16px;
+    .brand-logo {
+      display: block;
+      width: 156px;
+      max-width: 74%;
+      height: auto;
+      margin: 0 auto;
     }
 
     header h1 {
@@ -48,7 +61,7 @@
 
     header p {
       margin: 0 auto;
-      max-width: 680px;
+      max-width: 720px;
       color: var(--muted);
       font-size: 1rem;
       line-height: 1.5;
@@ -70,21 +83,68 @@
       backdrop-filter: blur(10px);
     }
 
-    .card h2 {
-      margin: 0 0 16px;
-      font-size: 1.15rem;
-      letter-spacing: -0.02em;
-    }
+    .card h2 { margin: 0 0 16px; font-size: 1.15rem; letter-spacing: -0.02em; }
 
     label {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 7px;
       font-weight: 700;
       margin: 14px 0 7px;
     }
 
-    .input-row {
+    .info {
       position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #eef2ff;
+      color: var(--primary-dark);
+      font-size: .75rem;
+      font-weight: 900;
+      cursor: help;
+      border: 1px solid #c7d2fe;
+      flex: 0 0 auto;
     }
+
+    .info:hover::after,
+    .info:focus::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 50%;
+      bottom: 135%;
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: 260px;
+      background: #111827;
+      color: white;
+      padding: 9px 11px;
+      border-radius: 10px;
+      font-size: .82rem;
+      line-height: 1.35;
+      font-weight: 600;
+      white-space: normal;
+      z-index: 40;
+      box-shadow: 0 12px 28px rgba(15,23,42,.24);
+      text-align: left;
+    }
+
+    .info:hover::before,
+    .info:focus::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 112%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #111827;
+      z-index: 41;
+    }
+
+    .input-row { position: relative; }
 
     input {
       width: 100%;
@@ -98,10 +158,7 @@
       transition: border-color .15s, box-shadow .15s;
     }
 
-    input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
-    }
+    input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, .12); }
 
     .euro {
       position: absolute;
@@ -112,19 +169,9 @@
       font-weight: 700;
     }
 
-    .hint {
-      color: var(--muted);
-      font-size: .9rem;
-      margin-top: 8px;
-      line-height: 1.4;
-    }
+    .hint { color: var(--muted); font-size: .9rem; margin-top: 8px; line-height: 1.4; }
 
-    .buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
+    .buttons { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
 
     button {
       appearance: none;
@@ -144,11 +191,10 @@
     button:active { transform: translateY(1px); }
     button.secondary { background: #475569; }
     button.secondary:hover { background: #334155; }
+    button.print { background: #047857; }
+    button.print:hover { background: #03684b; }
 
-    .result-list {
-      display: grid;
-      gap: 10px;
-    }
+    .result-list { display: grid; gap: 10px; }
 
     .line {
       display: flex;
@@ -160,12 +206,15 @@
     }
 
     .line:last-child { border-bottom: 0; }
-    .line span:first-child { color: var(--muted); }
-    .line strong {
-      font-size: 1.08rem;
-      white-space: nowrap;
-      text-align: right;
+
+    .line span:first-child {
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
+
+    .line strong { font-size: 1.08rem; white-space: nowrap; text-align: right; }
 
     .total {
       margin-top: 14px;
@@ -175,17 +224,24 @@
       border-radius: 16px;
     }
 
-    .total .label {
-      color: var(--muted);
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
+    .total .label { color: var(--muted); font-weight: 700; margin-bottom: 4px; }
 
     .total .amount {
       font-size: clamp(1.8rem, 6vw, 2.7rem);
       font-weight: 900;
       color: var(--good);
       letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .print-note {
+      display: none;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.45;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
     }
 
     details {
@@ -196,33 +252,15 @@
       padding: 14px 16px;
     }
 
-    summary {
-      cursor: pointer;
-      font-weight: 800;
-    }
+    summary { cursor: pointer; font-weight: 800; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      font-size: .92rem;
-    }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .92rem; }
 
-    th, td {
-      border-bottom: 1px solid var(--border);
-      padding: 9px 6px;
-      text-align: right;
-    }
-
+    th, td { border-bottom: 1px solid var(--border); padding: 9px 6px; text-align: right; }
     th:first-child, td:first-child { text-align: left; }
     th { color: var(--muted); font-weight: 800; }
 
-    footer {
-      color: var(--muted);
-      text-align: center;
-      padding: 18px 8px 8px;
-      font-size: .88rem;
-    }
+    footer { color: var(--muted); text-align: center; padding: 18px 8px 8px; font-size: .88rem; line-height: 1.45; }
 
     @media (max-width: 760px) {
       body { padding: 10px; }
@@ -235,74 +273,131 @@
       .line strong { font-size: 1rem; }
       table { font-size: .82rem; }
       th, td { padding: 8px 4px; }
+      .info:hover::after, .info:focus::after { max-width: 220px; }
     }
 
     @media print {
-      body { background: #fff; }
-      .card { box-shadow: none; }
-      button, footer, details { display: none; }
-      .grid { grid-template-columns: 1fr 1fr; }
+      @page { size: A4; margin: 12mm; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { background: #fff !important; padding: 0; color: #111827; }
+      .wrap { width: 100%; max-width: none; }
+      header {
+        padding: 0 0 10mm;
+        text-align: center;
+        border-bottom: 2px solid #d9e2ef;
+        margin-bottom: 8mm;
+      }
+      header p, h1  {
+        display: none;
+      }
+      
+      .brand-top { display: none !important; justify-content: center; margin-bottom: 7mm; }
+      .brand-logo { width: 150px; margin: 0 auto; }
+      header h1 { font-size: 22pt; letter-spacing: -0.02em; margin-bottom: 4mm; }
+      header p { max-width: none; font-size: 10pt; color: #475569; }
+      .grid { display: block; }
+      .card {
+        box-shadow: none;
+        border: 1px solid #d9e2ef;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 8mm;
+        background: #fff !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .card:first-child { display: none; }
+      .card h2 { font-size: 14pt; }
+      .line { padding: 8px 0; }
+      .line span:first-child,
+      .line strong { font-size: 10pt; }
+      .info { display: none !important; }
+      .total {
+        background: #ecfdf5 !important;
+        border: 1px solid #a7f3d0;
+        padding: 14px;
+        margin-top: 8mm;
+        break-inside: avoid;
+      }
+      .total .label { font-size: 10pt; }
+      .total .amount { font-size: 22pt; white-space: nowrap; }
+      .print-note { display: block; }
+      button, details, footer, .buttons, .hint, input, label { display: none !important; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <h1>Copart.fi aukciono mokesčių skaičiuoklė</h1><br>
-      <p>Įveskite transporto priemonės kaina kainą ir transportavimo kainą. Skaičiuoklė automatiškai paskaičiuos Green papers fee, Buyer fee, Virtual bid fee ir galutinę bendrą sumą.</p>
+      <div class="brand-top">
+        <img class="brand-logo" src="logo.svg" alt="Copart.fi logotipas" />
+      </div>
+
+      <h1>Aukciono mokesčių skaičiuoklė</h1>
+      <p>Įveskite transporto priemonės aukciono kainą ir/ar transportavimo kainą. Skaičiuoklė automatiškai apskaičiuos visus mokesčius ir pateiks preliminarią galutinę sumą.</p>
     </header>
 
     <main class="grid">
       <section class="card">
-        <h2></h2>
+        <h2>Įveskite duomenis</h2>
 
-        <label for="salePrice">Transporto priemonės kaina</label>
+        <label for="salePrice">
+          Transporto priemonės aukciono kaina
+          <span class="info" tabindex="0" data-tooltip="Winning bid">?</span>
+        </label>
         <div class="input-row">
-          <input id="salePrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Pvz., 5300" />
+          <input id="salePrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="" />
           <span class="euro">€</span>
         </div>
-        <div class="hint">Buyer fee ir Virtual bid fee skaičiuojami pagal laimėtos sumos intervalą.</div>
+        <div class="hint">Aukciono ir virtualaus statymo mokesčiai skaičiuojami pagal transporto priemonės aukciono kainos intervalą.</div>
 
-        <label for="transportPrice">Transportavimo kaina</label>
+        <label for="transportPrice">
+          Transportavimo kaina
+          <span class="info" tabindex="0" data-tooltip="Delivery cost">?</span>
+        </label>
         <div class="input-row">
-          <input id="transportPrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Pvz., 600" />
+          <input id="transportPrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="" />
           <span class="euro">€</span>
         </div>
-        <div class="hint">Transportavimo suma pridedama prie galutinės bendros sumos.</div>
+        <div class="hint">Transportavimo suma pridedama prie preliminarios galutinės sumos.</div>
 
         <div class="buttons">
           <button onclick="calculate()">Skaičiuoti</button>
           <button class="secondary" onclick="resetCalc()">Išvalyti</button>
+          <button class="print" onclick="printPdf()">Spausdinti / PDF</button>
         </div>
       </section>
 
       <section class="card">
-        <h2></h2>
+        <h2>Skaičiavimo rezultatai</h2>
         <div class="result-list">
-          <div class="line"><span>Transporto priemonės kaina:</span><strong id="rSale">0,00 €</strong></div> 
-          <div class="line"><span>Green papers fee:</span><strong id="rGreen">0,00 €</strong></div>
-          <div class="line"><span>Buyer fee:</span><strong id="rBuyer">0,00 €</strong></div>
-          <div class="line"><span>Virtual bid fee:</span><strong id="rVirtual">0,00 €</strong></div>
-          <div class="line"><span>Transportavimo suma:</span><strong id="rTransport">0,00 €</strong></div>
-          <div class="line"><span>Viso mokesčių:</span><strong id="rFees">0,00 €</strong></div>
+          <div class="line"><span>Transporto priemonės aukciono kaina: <span class="info" tabindex="0" data-tooltip="Winning bid">?</span></span><strong id="rSale">0,00 €</strong></div>
+          <div class="line"><span>Dokumentų mokestis: <span class="info" tabindex="0" data-tooltip="Green papers fee">?</span></span><strong id="rGreen">0,00 €</strong></div>
+          <div class="line"><span>Aukciono mokestis: <span class="info" tabindex="0" data-tooltip="Buyer fee">?</span></span><strong id="rBuyer">0,00 €</strong></div>
+          <div class="line"><span>Virtualaus statymo mokestis: <span class="info" tabindex="0" data-tooltip="Virtual bid fee">?</span></span><strong id="rVirtual">0,00 €</strong></div>
+          <div class="line"><span>Transportavimo suma: <span class="info" tabindex="0" data-tooltip="Delivery cost">?</span></span><strong id="rTransport">0,00 €</strong></div>
+          <div class="line"><span>Iš viso mokesčių:</span><strong id="rFees">0,00 €</strong></div>
         </div>
 
         <div class="total">
-          <div class="label">Galutinė suma</div>
+          <div class="label">Preliminari galutinė suma</div>
           <div class="amount" id="rTotal">0,00 €</div>
+        </div>
+
+        <div class="print-note">
+          Ši ataskaita yra preliminari ir parengta pagal įvestus duomenis. Galutinė transporto priemonės įsigijimo kaina gali skirtis dėl papildomų aukciono sąlygų, transportavimo ar kitų paslaugų.
         </div>
       </section>
     </main>
 
     <details>
       <summary>Mokesčių lentelės</summary>
-      <h3>Buyer fees</h3>
+      <h3>Aukciono mokestis <span class="info" tabindex="0" data-tooltip="Buyer fee">?</span></h3>
       <table>
         <thead><tr><th>Nuo</th><th>Iki</th><th>Mokestis</th></tr></thead>
         <tbody id="buyerTable"></tbody>
       </table>
-
-      <h3>Virtual bid fee</h3>
+      <h3>Virtualaus statymo mokestis <span class="info" tabindex="0" data-tooltip="Virtual bid fee">?</span></h3>
       <table>
         <thead><tr><th>Nuo</th><th>Iki</th><th>Mokestis</th></tr></thead>
         <tbody id="virtualTable"></tbody>
@@ -310,13 +405,12 @@
     </details>
 
     <footer>
-      Pastaba: Green papers fee taikomas fiksuotas — 71,00 €. Buyer fee nuo 28 000 € skaičiuojamas kaip 6 % nuo pardavimo kainos.
+      Pastaba: Aukciono mokestis nuo 28 000 € skaičiuojamas kaip 6 % nuo transporto priemonės aukciono kainos.
     </footer>
   </div>
 
   <script>
     const greenPapersFee = 71;
-
     const buyerFees = [
       { from: 0.01, to: 49.99, fee: 5 },
       { from: 50, to: 79.99, fee: 15 },
@@ -349,7 +443,7 @@
     });
 
     function numberValue(id) {
-      const value = parseFloat(document.getElementById(id).value.replace(',', '.'));
+      const value = parseFloat(document.getElementById(id).value.toString().replace(',', '.'));
       return Number.isFinite(value) && value > 0 ? value : 0;
     }
 
@@ -366,32 +460,34 @@
       return row ? row.fee : 0;
     }
 
-    
-function calculate() {
-  const salePrice = numberValue('salePrice');
-  const transportPrice = numberValue('transportPrice');
+    function calculate() {
+      const salePrice = numberValue('salePrice');
+      const transportPrice = numberValue('transportPrice');
+      const greenFee = salePrice > 0 ? greenPapersFee : 0;
+      const buyerFee = getBuyerFee(salePrice);
+      const virtualFee = getVirtualBidFee(salePrice);
+      const feesTotal = greenFee + buyerFee + virtualFee;
+      const total = salePrice + transportPrice + feesTotal;
 
-  const greenFee = salePrice > 0 ? greenPapersFee : 0;
-  const buyerFee = getBuyerFee(salePrice);
-  const virtualFee = getVirtualBidFee(salePrice);
-
-  const feesTotal = greenFee + buyerFee + virtualFee;
-  const total = salePrice + transportPrice + feesTotal;
-
-  document.getElementById('rSale').textContent = eur.format(salePrice);
-  document.getElementById('rGreen').textContent = eur.format(greenFee);
-  document.getElementById('rBuyer').textContent = eur.format(buyerFee);
-  document.getElementById('rVirtual').textContent = eur.format(virtualFee);
-  document.getElementById('rTransport').textContent = eur.format(transportPrice);
-  document.getElementById('rFees').textContent = eur.format(feesTotal);
-  document.getElementById('rTotal').textContent = eur.format(total);
-}
+      document.getElementById('rSale').textContent = eur.format(salePrice);
+      document.getElementById('rGreen').textContent = eur.format(greenFee);
+      document.getElementById('rBuyer').textContent = eur.format(buyerFee);
+      document.getElementById('rVirtual').textContent = eur.format(virtualFee);
+      document.getElementById('rTransport').textContent = eur.format(transportPrice);
+      document.getElementById('rFees').textContent = eur.format(feesTotal);
+      document.getElementById('rTotal').textContent = eur.format(total);
+    }
 
     function resetCalc() {
       document.getElementById('salePrice').value = '';
       document.getElementById('transportPrice').value = '';
       calculate();
       document.getElementById('salePrice').focus();
+    }
+
+    function printPdf() {
+      calculate();
+      setTimeout(() => window.print(), 100);
     }
 
     function rangeText(to) {
@@ -406,7 +502,6 @@ function calculate() {
           <td>${row.percent ? '6 % nuo kainos' : eur.format(row.fee)}</td>
         </tr>
       `).join('');
-
       document.getElementById('virtualTable').innerHTML = virtualBidFees.map(row => `
         <tr>
           <td>${eur.format(row.from)}</td>
@@ -418,7 +513,6 @@ function calculate() {
 
     document.getElementById('salePrice').addEventListener('input', calculate);
     document.getElementById('transportPrice').addEventListener('input', calculate);
-
     buildTables();
     calculate();
   </script>
