@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Copart.fi aukciono mokesčių skaičiuoklė</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #102033;
+      --muted: #667085;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --border: #d9e2ef;
+      --good: #047857;
+      --shadow: 0 12px 30px rgba(16, 32, 51, 0.10);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #dbeafe 0, var(--bg) 42%, #eef2ff 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 18px;
+    }
+
+    .wrap {
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 22px 10px 16px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.65rem, 4vw, 2.7rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    header p {
+      margin: 0 auto;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(217, 226, 239, 0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 14px 0 7px;
+    }
+
+    .input-row {
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      font-size: 1.15rem;
+      padding: 14px 48px 14px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    }
+
+    .euro {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 15px;
+      font-weight: 800;
+      cursor: pointer;
+      color: #fff;
+      background: var(--primary);
+      transition: transform .08s, background .15s;
+      flex: 1;
+      min-width: 135px;
+    }
+
+    button:hover { background: var(--primary-dark); }
+    button:active { transform: translateY(1px); }
+    button.secondary { background: #475569; }
+    button.secondary:hover { background: #334155; }
+
+    .result-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .line:last-child { border-bottom: 0; }
+    .line span:first-child { color: var(--muted); }
+    .line strong {
+      font-size: 1.08rem;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .total {
+      margin-top: 14px;
+      padding: 18px;
+      background: linear-gradient(135deg, #eff6ff, #ecfdf5);
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+    }
+
+    .total .label {
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .total .amount {
+      font-size: clamp(1.8rem, 6vw, 2.7rem);
+      font-weight: 900;
+      color: var(--good);
+      letter-spacing: -0.04em;
+    }
+
+    details {
+      margin-top: 18px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: .92rem;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 9px 6px;
+      text-align: right;
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted); font-weight: 800; }
+
+    footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 18px 8px 8px;
+      font-size: .88rem;
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 10px; }
+      .grid { grid-template-columns: 1fr; }
+      .card { padding: 16px; border-radius: 16px; }
+      header { padding-top: 14px; }
+      input { font-size: 1.05rem; }
+      .buttons { flex-direction: column; }
+      button { width: 100%; }
+      .line strong { font-size: 1rem; }
+      table { font-size: .82rem; }
+      th, td { padding: 8px 4px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .card { box-shadow: none; }
+      button, footer, details { display: none; }
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Copart.fi aukciono mokesčių skaičiuoklė</h1>
+      <p>Įveskite laimėtą kainą ir atvežimo sumą. Skaičiuoklė automatiškai paskaičiuos Green papers fee, Buyer fee, Virtual bid fee ir galutinę bendrą sumą.</p>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <h2>Įvestis</h2>
+
+        <label for="salePrice">Laimėta suma</label>
+        <div class="input-row">
+          <input id="salePrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Pvz., 5300" />
+          <span class="euro">€</span>
+        </div>
+        <div class="hint">Buyer fee ir Virtual bid fee skaičiuojami pagal laimėtos sumos intervalą.</div>
+
+        <label for="transportPrice">Atvežimo suma</label>
+        <div class="input-row">
+          <input id="transportPrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Pvz., 600" />
+          <span class="euro">€</span>
+        </div>
+        <div class="hint">Atvežimo suma pridedama prie galutinės bendros sumos.</div>
+
+        <div class="buttons">
+          <button onclick="calculate()">Skaičiuoti</button>
+          <button class="secondary" onclick="resetCalc()">Išvalyti</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Rezultatai</h2>
+        <div class="result-list">
+          <div class="line"><span>Laimėta suma</span><strong id="rSale">0,00 €</strong></div>
+          <div class="line"><span>Green papers fee</span><strong id="rGreen">71,00 €</strong></div>
+          <div class="line"><span>Buyer fee</span><strong id="rBuyer">0,00 €</strong></div>
+          <div class="line"><span>Virtual bid fee</span><strong id="rVirtual">0,00 €</strong></div>
+          <div class="line"><span>Atvežimo suma</span><strong id="rTransport">0,00 €</strong></div>
+          <div class="line"><span>Viso mokesčių</span><strong id="rFees">71,00 €</strong></div>
+        </div>
+
+        <div class="total">
+          <div class="label">Bendra suma</div>
+          <div class="amount" id="rTotal">71,00 €</div>
+        </div>
+      </section>
+    </main>
+
+    <details>
+      <summary>Mokesčių lentelės</summary>
+      <h3>Buyer fees</h3>
+      <table>
+        <thead><tr><th>Nuo</th><th>Iki</th><th>Mokestis</th></tr></thead>
+        <tbody id="buyerTable"></tbody>
+      </table>
+
+      <h3>Virtual bid fee</h3>
+      <table>
+        <thead><tr><th>Nuo</th><th>Iki</th><th>Mokestis</th></tr></thead>
+        <tbody id="virtualTable"></tbody>
+      </table>
+    </details>
+
+    <footer>
+      Pastaba: Green papers fee taikomas fiksuotas — 71,00 €. Buyer fee nuo 28 000 € skaičiuojamas kaip 6 % nuo pardavimo kainos.
+    </footer>
+  </div>
+
+  <script>
+    const greenPapersFee = 71;
+
+    const buyerFees = [
+      { from: 0.01, to: 49.99, fee: 5 },
+      { from: 50, to: 79.99, fee: 15 },
+      { from: 80, to: 149.99, fee: 35 },
+      { from: 150, to: 329.99, fee: 70 },
+      { from: 330, to: 689.99, fee: 120 },
+      { from: 690, to: 1299.99, fee: 195 },
+      { from: 1300, to: 2199.99, fee: 275 },
+      { from: 2200, to: 3499.99, fee: 375 },
+      { from: 3500, to: 5299.99, fee: 530 },
+      { from: 5300, to: 7699.99, fee: 700 },
+      { from: 7700, to: 10799.99, fee: 925 },
+      { from: 10800, to: 14699.99, fee: 1200 },
+      { from: 14700, to: 19499.99, fee: 1375 },
+      { from: 19500, to: 27999.99, fee: 1690 },
+      { from: 28000, to: Infinity, percent: 0.06 }
+    ];
+
+    const virtualBidFees = [
+      { from: 0.01, to: 6749.99, fee: 27 },
+      { from: 6750, to: 13499.99, fee: 37 },
+      { from: 13500, to: Infinity, fee: 47 }
+    ];
+
+    const eur = new Intl.NumberFormat('lt-LT', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+    function numberValue(id) {
+      const value = parseFloat(document.getElementById(id).value.replace(',', '.'));
+      return Number.isFinite(value) && value > 0 ? value : 0;
+    }
+
+    function getBuyerFee(price) {
+      if (price <= 0) return 0;
+      const row = buyerFees.find(item => price >= item.from && price <= item.to);
+      if (!row) return 0;
+      return row.percent ? price * row.percent : row.fee;
+    }
+
+    function getVirtualBidFee(price) {
+      if (price <= 0) return 0;
+      const row = virtualBidFees.find(item => price >= item.from && price <= item.to);
+      return row ? row.fee : 0;
+    }
+
+    function calculate() {
+      const salePrice = numberValue('salePrice');
+      const transportPrice = numberValue('transportPrice');
+      const buyerFee = getBuyerFee(salePrice);
+      const virtualFee = getVirtualBidFee(salePrice);
+      const feesTotal = greenPapersFee + buyerFee + virtualFee;
+      const total = salePrice + transportPrice + feesTotal;
+
+      document.getElementById('rSale').textContent = eur.format(salePrice);
+      document.getElementById('rGreen').textContent = eur.format(greenPapersFee);
+      document.getElementById('rBuyer').textContent = eur.format(buyerFee);
+      document.getElementById('rVirtual').textContent = eur.format(virtualFee);
+      document.getElementById('rTransport').textContent = eur.format(transportPrice);
+      document.getElementById('rFees').textContent = eur.format(feesTotal);
+      document.getElementById('rTotal').textContent = eur.format(total);
+    }
+
+    function resetCalc() {
+      document.getElementById('salePrice').value = '';
+      document.getElementById('transportPrice').value = '';
+      calculate();
+      document.getElementById('salePrice').focus();
+    }
+
+    function rangeText(to) {
+      return to === Infinity ? '∞' : eur.format(to);
+    }
+
+    function buildTables() {
+      document.getElementById('buyerTable').innerHTML = buyerFees.map(row => `
+        <tr>
+          <td>${eur.format(row.from)}</td>
+          <td>${rangeText(row.to)}</td>
+          <td>${row.percent ? '6 % nuo kainos' : eur.format(row.fee)}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('virtualTable').innerHTML = virtualBidFees.map(row => `
+        <tr>
+          <td>${eur.format(row.from)}</td>
+          <td>${rangeText(row.to)}</td>
+          <td>${eur.format(row.fee)}</td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('salePrice').addEventListener('input', calculate);
+    document.getElementById('transportPrice').addEventListener('input', calculate);
+
+    buildTables();
+    calculate();
+  </script>
+</body>
+</html>
